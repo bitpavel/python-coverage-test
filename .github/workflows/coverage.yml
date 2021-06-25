@@ -29,5 +29,5 @@ jobs:
         run: |
           pip install coveralls
           ls -la
-          coveralls --verbose --service=github
+          coveralls --verbose --service=github-actions
 
