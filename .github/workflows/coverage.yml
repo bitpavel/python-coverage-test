@@ -22,5 +22,7 @@ jobs:
       - name: Coveralls
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB }}
-        run: coveralls
+        run: |
+          pip install coveralls
+          coveralls
 
