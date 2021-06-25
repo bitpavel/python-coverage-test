@@ -1,10 +1,13 @@
 name: Python package
 
-on: [push]
+on: [pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB }}
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 
@@ -13,6 +16,7 @@ jobs:
           python-version: 3.9 
       - name: Install dependencies
         run: |
+          ls -la
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
@@ -22,5 +26,8 @@ jobs:
       - name: Coveralls
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB }}
-        run: coveralls
+        run: |
+          pip install coveralls
+          ls -la
+          coveralls --verbose --service=github-actions
 
